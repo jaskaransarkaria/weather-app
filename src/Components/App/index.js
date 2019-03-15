@@ -11,12 +11,14 @@ class App extends React.Component {
   }
   render() {
     return (
-      <>
+      <div id="img">
         <Input />
-        <City lat={52.48} lon={-1.9} />
-        <City lat={53.4793} lon={-2.2479} />
-        <City lat={37.129} lon={-84.0833} />
-      </>
+        <div id="container">
+          <City lat={52.48} lon={-1.9} />
+          <City lat={53.4793} lon={-2.2479} />
+          <City lat={37.129} lon={-84.0833} />
+        </div>
+      </div>
     );
   }
 }
