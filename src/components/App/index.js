@@ -17,7 +17,8 @@ class App extends Component {
                 "Manchester,UK"
             ],
             selectedCity: "",
-            search: ""
+            search: "",
+            latLongs: []
         };
     }
 
@@ -29,8 +30,11 @@ class App extends Component {
                 .then(matches =>
                     matches.filter(item => item.geocodeQuality === "CITY")
                 )
-                .then(data =>
-                    console.log({ ...data[0].adminArea5, ...data[0].latLng })
+                .then(info => info[0].latLng)
+                .then(latLong =>
+                    this.setState({
+                        latLongs: [...this.state.latLongs, latLong]
+                    })
                 )
         );
     };
@@ -41,15 +45,15 @@ class App extends Component {
         });
     }
 
+    componentDidMount() {
+        this.state.favourites.map(city => this.getLatLongOfCity(city));
+    }
+
     render() {
         return (
             <div className="App">
                 Weather
-                <CitiesList
-                    cities={this.state.favourites.map(city =>
-                        this.getLatLongOfCity("Manchester,UK")
-                    )}
-                />
+                <CitiesList cities={this.state.cities} />
             </div>
         );
     }
