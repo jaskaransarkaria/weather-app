@@ -1,11 +1,26 @@
 body {
   margin: 0;
   padding: 0;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
+  color: hotpink;
+  font-size: 45px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#img {
+  background-image: url("https://sep.yimg.com/ay/artbook/martin-parr-life-s-a-beach-153.jpg");
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
 }
 
 code {
