@@ -1,0 +1,29 @@
+.cityItem {
+    padding: 10px;
+    border: 1px dashed gray;
+    border-radius: 5px;
+    width: 80%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.loading {
+    color: lightgray;
+}
+.cityName {
+    float: left;
+}
+
+.mainDesc {
+    float: right;
+}
+
+.temp {
+    float: left;
+}
+
+.icon {
+    float: left;
+}
