@@ -1,26 +1,79 @@
-import React from "react";
-import City from "../City";
+import React, { Component } from "react";
 import Input from "../Input";
+import CitiesList from "../CitiesList";
+import css from "./App.module.css";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchValue: ""
+const mqUrl = "http://www.mapquestapi.com/geocoding/v1/address?";
+const mqKey = "nGPQAMrpbsk44Ulzl9Y1XEkBiDtKX7bV";
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            favourites: [
+                "London,UK",
+                "Birmingham,UK",
+                "Manchester,UK",
+                "Edinburgh,UK"
+            ],
+            selectedCity: "",
+            search: null,
+            latLongs: []
+        };
+    }
+
+    getLatLongOfCity(city) {
+        fetch(`${mqUrl}key=${mqKey}&location=${city}`)
+            .then(res => res.json())
+            .then(data => data.results[0].locations)
+            .then(matches =>
+                matches.filter(item => item.geocodeQuality === "CITY")
+            )
+            .then(info =>
+                this.setState({
+                    latLongs: [...this.state.latLongs, info[0].latLng]
+                })
+            );
+    }
+
+    selectCity = index => {
+        this.setState(() => ({
+            selectedCity: index
+        }));
     };
-  }
-  render() {
-    return (
-      <div id="img">
-        <Input />
-        <div id="container">
-          <City lat={52.48} lon={-1.9} />
-          <City lat={53.4793} lon={-2.2479} />
-          <City lat={37.129} lon={-84.0833} />
-        </div>
-      </div>
-    );
-  }
+
+    onSearch = search => {
+        this.setState(() => ({
+            search: search
+        }));
+        this.getLatLongOfCity(`${search},UK`);
+        this.setState(() => ({
+            search: null
+        }));
+    };
+
+    componentDidMount() {
+        this.state.favourites.map(city => this.getLatLongOfCity(city));
+    }
+
+    render() {
+        return (
+            <div className={css.app}>
+                <h1>Can I Wear Shorts Today?</h1>
+                {/* {!this.state.search ? ( */}
+                <>
+                    <Input onSearch={this.onSearch} />
+                    <CitiesList
+                        cities={this.state.latLongs}
+                        onSelect={() => this.selectCity}
+                    />
+                </>
+                {/* ) : (
+                    <Details seachCoords={this.state.search} />
+                )} */}
+            </div>
+        );
+    }
 }
 
 export default App;
