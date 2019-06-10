@@ -1,5 +1,5 @@
 import React from "react";
-import City from "../City";
+import Quote from "../Quote";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <>
        
-        <City lat={52.48} lon={-1.9}/>
+        <Quote />
       </>
     );
   }
